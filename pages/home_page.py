@@ -3,7 +3,7 @@ import allure
 from selene import browser, have, be
 
 
-class MainPage:
+class HomePage:
 
 
 # Открываем url
@@ -31,9 +31,3 @@ class MainPage:
     @allure.step('Footer performance')
     def check_footer(self):
         browser.all('.container').second.should(have.text('420008, г. Казань, ул. Кремлевская, д. 35, каб. 114, 115, 211'))
-# проходи сценарий бакалавра
-    @allure.step('Go to bachelor page')
-    def go_to_bachelor(self):
-        browser.element('#menu-item-55').click()
-
-

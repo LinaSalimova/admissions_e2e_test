@@ -1,48 +1,82 @@
 import os
+
 import pytest
-
-from selene import browser
 from selenium import webdriver
+from selene.support.shared import browser
+from selenium.webdriver.chrome.options import Options
+from python_skillbox.utils import attach
+from dotenv import load_dotenv
 
-from utils import attach
 
-options = webdriver.ChromeOptions()
+DEFAULT_BROWSER = 'chrome'
+DEFAULT_BROWSER_VERSION = '100.0'
 
 
-@pytest.fixture(scope='function', autouse=True)
-def browser_opt():
-    from dotenv import load_dotenv
+def pytest_addoption(parser):
+    parser.addoption(
+        '--browser_name',
+        default=DEFAULT_BROWSER,
+        help='web: browser (chrome | firefox)'
+    )
+
+    parser.addoption(
+        '--browser_version',
+        default=DEFAULT_BROWSER_VERSION,
+        help='web: browser version (if chrome: 100.0, 99.0; firefox: 98.0, 97.0)'
+    )
+
+
+@pytest.fixture(scope='session', autouse=True)
+def load_env():
     load_dotenv()
-    login = os.getenv('LOGIN')
-    password = os.getenv('PASSWORD')
+
+
+@pytest.fixture(scope='session')
+def get_option_browser_name(request):
+    return request.config.getoption('--browser_name')
+
+
+@pytest.fixture(scope='session')
+def get_option_browser_version(request):
+    return request.config.getoption('--browser_version')
+
+
+@pytest.fixture(scope='function')
+def setup_browser(get_option_browser_name, get_option_browser_version):
+    browser.config.base_url = "https://skillbox.ru/"
+    browser.config.window_width = 1440
+    browser.config.window_height = 900
+    browser.config.timeout = 15
+    options = Options()
+
+    browser_name = get_option_browser_name
+    browser_name = browser_name if browser_name != '' else DEFAULT_BROWSER
+
+    browser_version = get_option_browser_version
+    browser_version = browser_version if browser_version != "" else DEFAULT_BROWSER_VERSION
 
     selenoid_capabilities = {
-        'browserName': 'chrome',
-        'browserVersion': '100',
-        'selenoid:options': {
-            'enableVNC': True,
-            'enableVideo': True
+        "browserName": browser_name,
+        "browserVersion": browser_version,
+        "selenoid:options": {
+            "enableVNC": True,
+            "enableVideo": True
         }
     }
-
-    browser.config.base_url = 'https://admissions.kpfu.ru/'
-    browser.config.window_height = 1080
-    browser.config.window_width = 1920
-
-
     options.capabilities.update(selenoid_capabilities)
 
+    login = os.getenv('SELENOID_LOGIN')
+    password = os.getenv('SELENOID_PASSWORD')
 
     browser.config.driver = webdriver.Remote(
-        command_executor=f'https://{login}:{password}@selenoid.autotests.cloud/wd/hub',
+        command_executor=f"https://{login}:{password}@selenoid.autotests.cloud/wd/hub",
         options=options
     )
 
     yield browser
 
+    attach.add_html(browser)
     attach.add_screenshot(browser)
     attach.add_logs(browser)
-    attach.add_html(browser)
     attach.add_video(browser)
-
     browser.quit()
