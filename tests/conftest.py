@@ -25,7 +25,7 @@ def browser_opt():
         }
     }
 
-    browser.config.base_url = 'https://nexign.com/ru/'
+    browser.config.base_url = 'https://admissions.kpfu.ru/'
     browser.config.window_height = 1080
     browser.config.window_width = 1920
 

@@ -8,60 +8,27 @@ main_page = MainPage()
 
 @allure.tag('Web')
 @allure.severity(Severity.NORMAL)
-@allure.label('owner', 'Elena Rogozina')
+@allure.label('owner', 'Alina Salimova')
 @allure.feature('Main page')
-@allure.story('Change language')
-@allure.link('https://nexign.com/ru')
-def test_change_language():
+@allure.story('Checking home page accessibility')
+@allure.link('https://admissions.kpfu.ru/')
+def test_сhecking_home_page():
     main_page.open()
-    main_page.click_language_button()
-    main_page.change_language_button()
-    main_page.confirm_en_language()
+    main_page.confirm_logo()
+    main_page.operability_navigation_menu()
+    main_page.check_news()
+    main_page.check_footer()
     pass
 
 
 @allure.tag('Web')
 @allure.severity(Severity.NORMAL)
-@allure.label('owner', 'Elena Rogozina')
-@allure.feature('Main page')
-@allure.story('Go to page')
-@allure.link('https://nexign.com/')
+@allure.label('owner', 'Alina Salimova')
+@allure.feature('Bachelor page')
+@allure.story('Checking the training program filtering system')
+@allure.link('https://admissions.kpfu.ru/')
 def test_go_to_page():
     main_page.open()
-    main_page.go_to_contacts()
+    main_page.go_to_bachelor()
     main_page.confirm_contacts_page()
 
-
-@allure.tag('Web')
-@allure.severity(Severity.NORMAL)
-@allure.label('owner', 'Elena Rogozina')
-@allure.feature('Main page')
-@allure.story('Go to home page')
-@allure.link('https://nexign.com/')
-def test_go_to_home_page():
-    main_page.open_other_page(url='about')
-    main_page.go_to_home_page()
-    main_page.confirm_home_page()
-
-
-@allure.tag('Web')
-@allure.severity(Severity.NORMAL)
-@allure.label('owner', 'Elena Rogozina')
-@allure.feature('Main page')
-@allure.story('Find article')
-@allure.link('https://nexign.com/')
-def test_find_articles():
-    main_page.open()
-    main_page.find_article('Тестирование')
-    main_page.confirm_finding_articles()
-
-
-@allure.tag('Web')
-@allure.severity(Severity.NORMAL)
-@allure.label('owner', 'Elena Rogozina')
-@allure.feature('Main page')
-@allure.story('Store is in menu')
-@allure.link('https://nexign.com/')
-def test_menu_content():
-    main_page.open()
-    main_page.confirm_menu_content_has_store()
