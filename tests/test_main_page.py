@@ -1,7 +1,9 @@
 import allure
+import pytest
 
 from allure_commons.types import Severity
 
+from data.filter import tags, page_munu
 from pages import home_page
 
 
@@ -28,6 +30,19 @@ def test_сhecking_home_page(self, setup_browser):
 @allure.feature('UI')
 @allure.story('Checking home page accessibility')
 @allure.severity(Severity.NORMAL)
-class BachelorPage:
+class DegreeScenarioPage:
+    @pytest.mark.parametrize('container', [tags])
+    @pytest.mark.parametrize('page', [page_munu])
 
-    def test_сhecking_home_page(self, setup_browser):
+
+def test_check_page(container, page):
+    menu_list_page.open_admission_rules()
+    menu_list_page.check_existence_file()
+
+
+@allure.tag("ui", "web")
+@allure.label('owner', 'Alina Salimova')
+@allure.feature('UI')
+@allure.story('Registration')
+@allure.severity(Severity.NORMAL)
+class CheckingRegistrationPage:
