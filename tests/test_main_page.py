@@ -4,7 +4,7 @@ import pytest
 from allure_commons.types import Severity
 
 from data.filter import tags, page_munu
-from pages import home_page
+from pages import registration_page
 
 
 @allure.tag("ui", "web")
@@ -45,4 +45,6 @@ def test_check_page(container, page):
 @allure.feature('UI')
 @allure.story('Registration')
 @allure.severity(Severity.NORMAL)
-class CheckingRegistrationPage:
+class RegistrationPage:
+    def test_check_page(self, setup_browser):
+    registration_page.registration_add_value()

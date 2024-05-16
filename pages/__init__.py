@@ -1,1 +1,1 @@
-from . import home_page
+from . import registration_page
