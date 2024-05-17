@@ -1,14 +1,19 @@
 import allure
-from bs4 import BeautifulSoup
+from bs import BeautifulSoup
 from selene import browser
 
 
+menu_type_education = '.fastMenu__link'
+
+
 class MenuListPage:
+
     # 1. открыть стр
-    @allure.step('Open page')
+    @allure.step('Open type education')
     def open_admission_rules(self):
-        browser.element('.menuLevel3__item').click()
+        browser.element(menu_type_education).click()
         return self
+
     # 2. проверить наличие файла (реализовать парсер с проверкой наличия файла) добавить выведение эксепшенов
     @allure.step('Check for file existence')
     def check_existence_file(self):

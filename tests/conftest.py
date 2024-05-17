@@ -1,10 +1,10 @@
 import os
 
 import pytest
+from allure_commons._allure import attach
 from selenium import webdriver
 from selene.support.shared import browser
 from selenium.webdriver.chrome.options import Options
-from python_skillbox.utils import attach
 from dotenv import load_dotenv
 
 
