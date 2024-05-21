@@ -33,7 +33,7 @@ def test_сhecking_home_page(self, setup_browser):
 class DegreeScenarioPage:
     @pytest.mark.parametrize('container', [tags])
     @pytest.mark.parametrize('page', [page_munu])
-def test_check_page(container, page):
+def test_check_page(self, container, page):
     menu_list_page.open_admission_rules()
     menu_list_page.check_existence_file()
 
@@ -44,7 +44,7 @@ def test_check_page(container, page):
 @allure.story('Registration')
 @allure.severity(Severity.NORMAL)
 class RegistrationPage:
-    def test_check_page(self, setup_browser):
+def test_check_registration_page(self, setup_browser):
         registration_page.registration_add_value_part_1()
         registration_page.registration_add_value_part_2()
         registration_page.check_for_success()

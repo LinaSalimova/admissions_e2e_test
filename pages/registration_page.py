@@ -46,3 +46,4 @@ class RegistrationPage:
     @allure.step('Registration check')
     def check_for_success(self):
         assert 'https://abiturient.kpfu.ru/entrant/abit_registration.registration_script'
+        return self
